@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace Src;
 
-readonly class Main
+final readonly class Main
 {
     public function __invoke(): void {}
 }

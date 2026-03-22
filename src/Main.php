@@ -15,6 +15,9 @@ declare(strict_types=1);
 
 namespace Src;
 
+/**
+ * @no-named-arguments
+ */
 final readonly class Main
 {
     public function __invoke(): void {}

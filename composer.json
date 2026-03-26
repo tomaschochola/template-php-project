@@ -59,10 +59,6 @@
     }
   ],
   "require": {
-    "ext-apcu": "*",
-    "ext-pdo": "*",
-    "ext-pdo_mysql": "*",
-    "ext-redis": "*",
     "php": "^8.5.0"
   },
   "require-dev": {

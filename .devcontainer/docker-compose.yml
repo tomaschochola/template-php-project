@@ -7,6 +7,15 @@ services:
       context: './'
       dockerfile: './Dockerfile'
       target: 'devcontainer'
+    depends_on:
+      php:
+        condition: 'service_healthy'
+      nginx:
+        condition: 'service_healthy'
+      mysql:
+        condition: 'service_healthy'
+      valkey:
+        condition: 'service_healthy'
     command: 'sleep infinity'
     environment:
       APP_ENV: 'local'
@@ -27,7 +36,7 @@ services:
     secrets:
       - 'db_password'
       - 'db_root_password'
-    user: 'devcontainer:devcontainer'
+    user: 'devcontainer'
     volumes:
       - './:/var/www/html'
       - 'global_composer_cache:/home/devcontainer/.composer'

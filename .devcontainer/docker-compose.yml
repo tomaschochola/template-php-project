@@ -19,14 +19,12 @@ services:
         condition: 'service_healthy'
     environment:
       APP_ENV: 'local'
-      COMPOSER_CACHE_DIR: '/home/devcontainer/.composer'
       MYSQL_DATABASE: 'db'
       MYSQL_HOST: 'mysql'
       MYSQL_PASSWORD_FILE: '/run/secrets/db_password'
       MYSQL_ROOT_PASSWORD_FILE: '/run/secrets/db_root_password'
       MYSQL_USER: 'db'
       NODE_ENV: 'development'
-      npm_config_cache: '/home/devcontainer/.npm'
     networks:
       - 'devcontainer'
       - 'mysql'
@@ -39,8 +37,6 @@ services:
     user: 'devcontainer'
     volumes:
       - './:/var/www/html'
-      - 'global_composer_cache:/home/devcontainer/.composer'
-      - 'global_npm_cache:/home/devcontainer/.npm'
   nginx:
     volumes:
       - './:/var/www/html'
@@ -54,8 +50,3 @@ services:
       NODE_ENV: 'development'
     volumes:
       - './:/var/www/html'
-volumes:
-  global_composer_cache:
-    external: true
-  global_npm_cache:
-    external: true

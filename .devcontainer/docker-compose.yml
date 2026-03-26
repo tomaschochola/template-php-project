@@ -7,16 +7,16 @@ services:
       context: './'
       dockerfile: './Dockerfile'
       target: 'devcontainer'
+    command: 'sleep infinity'
     depends_on:
-      php:
+      mysql:
         condition: 'service_healthy'
       nginx:
         condition: 'service_healthy'
-      mysql:
+      php:
         condition: 'service_healthy'
       valkey:
         condition: 'service_healthy'
-    command: 'sleep infinity'
     environment:
       APP_ENV: 'local'
       COMPOSER_CACHE_DIR: '/home/devcontainer/.composer'

@@ -26,24 +26,24 @@
     "process-timeout": 0,
     "sort-packages": true
   },
-  "description": "tomaschochola/php-template-project",
+  "description": "tomaschochola/template-php-project",
   "funding": [
     {
       "type": "github",
       "url": "https://github.com/sponsors/tomaschochola"
     }
   ],
-  "homepage": "https://github.com/tomaschochola/php-template-project",
+  "homepage": "https://github.com/tomaschochola/template-php-project",
   "keywords": [
     "tomaschochola",
     "TomasChochola",
     "Tomas Chochola",
     "Tomáš Chochola",
-    "php-template-project"
+    "template-php-project"
   ],
   "license": "CC-BY-ND-4.0",
   "minimum-stability": "dev",
-  "name": "tomaschochola/php-template-project",
+  "name": "tomaschochola/template-php-project",
   "prefer-stable": true,
   "readme": "./README.md",
   "repositories": [
@@ -72,10 +72,10 @@
     "tomaschochola/tooling-phpstan": "^1.0@dev"
   },
   "support": {
-    "docs": "https://github.com/tomaschochola/php-template-project",
+    "docs": "https://github.com/tomaschochola/template-php-project",
     "email": "tomaschochola@tomaschochola.cz",
-    "issues": "https://github.com/tomaschochola/php-template-project/issues",
-    "source": "https://github.com/tomaschochola/php-template-project.git"
+    "issues": "https://github.com/tomaschochola/template-php-project/issues",
+    "source": "https://github.com/tomaschochola/template-php-project.git"
   },
   "type": "project"
 }

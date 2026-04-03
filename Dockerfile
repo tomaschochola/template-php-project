@@ -15,7 +15,7 @@ RUN <<EOF
   apt-get update -y
   apt-get upgrade -y --no-install-recommends
   apt-get install -y --no-install-recommends libfcgi-bin
-  docker-php-ext-install pdo_mysql
+  pecl channel-update pecl.php.net
   pecl install apcu redis
   docker-php-ext-enable apcu redis
   apt-get autoremove -y

@@ -130,31 +130,26 @@ start serve server dev: ./vendor ./index.php ./composer.json ./composer.lock
 	php -S 0.0.0.0:8000 ./index.php
 
 .PHONY: image
-image:
+image: ./.secrets/mysql_root_password
 	docker compose -f ./docker-compose.yml -f ./docker-compose-swarm.yml build --pull --push
 
 .PHONY: deploy
-deploy:
+deploy: ./.secrets/mysql_root_password
 	docker stack deploy -c ./docker-compose.yml -c ./docker-compose-swarm.yml --with-registry-auth --prune --detach=false --resolve-image=always ${CI_PROJECT_PATH_SLUG:-template-php-project}
 
 .PHONY: up
-up:
+up: ./.secrets/mysql_root_password
 	docker compose -f ./docker-compose.yml -f ./docker-compose-swarm.yml up --build --remove-orphans --always-recreate-deps --force-recreate --pull=always --renew-anon-volumes
 
 .PHONY: down
-down:
+down: ./.secrets/mysql_root_password
 	docker compose -f ./docker-compose.yml -f ./docker-compose-swarm.yml down --remove-orphans
 
-.PHONY: password
-password:
-	@tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 32
-
-.PHONY: secret
-secret:
-	@tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 64
+.PHONY: secrets
+secrets: ./.secrets/mysql_root_password
 
 .PHONY: devcontainer
-devcontainer:
+devcontainer: ./.secrets/mysql_root_password
 	devcontainer up
 	devcontainer exec /bin/bash || true
 	docker compose -f ./docker-compose.yml -f ./docker-compose-devcontainer.yml down --remove-orphans
@@ -168,3 +163,7 @@ devcontainer:
 
 ./package-lock.json ./node_modules: ./package.json
 	${MAKE} npm_update
+
+./.secrets/mysql_root_password:
+	@mkdir -p ./.secrets
+	@umask 077; tmp="$@.tmp"; tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 32 > "$$tmp"; mv "$$tmp" "$@"

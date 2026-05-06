@@ -9,7 +9,7 @@ networks:
     internal: true
 secrets:
   mysql_root_password:
-    file: './ops/secret'
+    file: './.secrets/mysql_root_password'
 services:
   mysql:
     build:

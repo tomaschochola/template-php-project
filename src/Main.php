@@ -18,7 +18,7 @@ namespace Src;
 /**
  * @no-named-arguments
  */
-final readonly class Main
+readonly class Main
 {
     public function __invoke(): void {}
 }

@@ -49,7 +49,7 @@ services:
       nofile:
         hard: 1048576
         soft: 1048576
-    user: 'mysql'
+    user: 'mysql:mysql'
     volumes:
       - source: 'mysql_data'
         target: '/var/lib/mysql'
@@ -94,7 +94,7 @@ services:
       nofile:
         hard: 1048576
         soft: 1048576
-    user: 'nginx'
+    user: 'nginx:nginx'
     volumes:
       - target: '/tmp'
         tmpfs:
@@ -196,7 +196,7 @@ services:
       nofile:
         hard: 1048576
         soft: 1048576
-    user: 'valkey'
+    user: 'valkey:valkey'
     volumes:
       - source: 'valkey_data'
         target: '/data'

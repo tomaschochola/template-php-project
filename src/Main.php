@@ -20,5 +20,7 @@ namespace Src;
  */
 readonly class Main
 {
-    public function __invoke(): void {}
+    public function __invoke(): void
+    {
+    }
 }

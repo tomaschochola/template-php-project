@@ -66,10 +66,11 @@ RUN <<EOF
 EOF
 
 FROM base AS php
-COPY --from=vendor /app/composer* ./
-COPY --from=vendor /app/vendor ./vendor
-COPY ./index.php ./index.php
-COPY ./src ./src
+COPY --chown=www-data:www-data --from=vendor /app/composer* ./
+COPY --chown=www-data:www-data --from=vendor /app/vendor ./vendor
+COPY --chown=www-data:www-data ./index.php ./index.php
+COPY --chown=www-data:www-data ./src ./src
+USER www-data
 RUN <<EOF
   set -euo pipefail
   composer dump-autoload --no-plugins --no-scripts --no-dev --classmap-authoritative --strict-psr --strict-ambiguous
@@ -80,18 +81,43 @@ RUN <<EOF
 EOF
 COPY ./ops/php/z.ini /usr/local/etc/php/conf.d/z.ini
 COPY ./ops/php/zz.ini /usr/local/etc/php/conf.d/zz.ini
-COPY ./ops/php/entrypoint.sh /usr/local/bin/docker-php-entrypoint
+COPY --chmod=755 ./ops/php/entrypoint.sh /usr/local/bin/docker-php-entrypoint
 
 FROM versionednginx AS nginx
+USER root
 WORKDIR /var/www/html
 COPY ./ops/nginx /etc/nginx
-COPY ./public ./
+COPY --chown=nginx:nginx ./public ./
 RUN <<EOF
 	set -euo pipefail
+	apt-get update -y
+	apt-get upgrade -y --no-install-recommends
 	openssl req -x509 -newkey rsa:4096 -nodes -sha256 -keyout /etc/nginx/snakeoil.key -out /etc/nginx/snakeoil.pem -days 3650 -subj "/CN=localhost" -addext "subjectAltName=DNS:*.localhost,DNS:localhost"
+	apt-get autoremove -y
+	apt-get autoclean -y
+	apt-get clean -y
+	rm -rf /var/lib/apt/lists/*
 EOF
+USER nginx
 
 FROM versionedmysql AS mysql
+RUN <<EOF
+  set -euo pipefail
+  mkdir -p /etc/dnf/vars
+  : > /etc/dnf/vars/ociregion
+  microdnf upgrade -y
+  microdnf clean all
+  rm -rf /var/cache/dnf /var/cache/yum
+EOF
 COPY ./ops/mysql /docker-entrypoint-initdb.d
 
 FROM versionedvalkey AS valkey
+RUN <<EOF
+  set -euo pipefail
+  apt-get update -y
+  apt-get upgrade -y --no-install-recommends
+  apt-get autoremove -y
+  apt-get autoclean -y
+  apt-get clean -y
+  rm -rf /var/lib/apt/lists/*
+EOF

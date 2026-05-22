@@ -7,7 +7,6 @@ SHELL := /bin/bash
 # Options
 export DEBIAN_FRONTEND := noninteractive
 export PHP_CS_FIXER_FUTURE_MODE=1
-
 # Goals
 .PHONY: commit
 commit: distclean update fix check
@@ -130,29 +129,43 @@ start serve server dev: ./vendor ./index.php ./composer.json ./composer.lock
 	php -S 0.0.0.0:8000 ./index.php
 
 .PHONY: image
-image: ./.secrets/mysql_root_password
+image: secrets
 	docker compose -f ./docker-compose.yml -f ./docker-compose-swarm.yml build --pull --push
 
+.PHONY: trivy
+trivy: secrets
+	docker compose -f ./docker-compose.yml -f ./docker-compose-swarm.yml build --pull
+	@set -eo pipefail; \
+		docker compose -f ./docker-compose.yml -f ./docker-compose-swarm.yml config --images | sort -u | \
+		xargs -r -n 1 docker run --rm --pull missing \
+			--mount type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock \
+			--mount type=volume,source=trivy-cache,target=/root/.cache \
+			aquasec/trivy:latest image \
+			--exit-code 1 \
+			--severity HIGH,CRITICAL
+
 .PHONY: deploy
-deploy: ./.secrets/mysql_root_password
-	docker stack deploy -c ./docker-compose.yml -c ./docker-compose-swarm.yml --with-registry-auth --prune --detach=false --resolve-image=always ${CI_PROJECT_PATH_SLUG:-template-php-project}
+deploy: secrets
+	docker stack deploy -c ./docker-compose.yml -c ./docker-compose-swarm.yml --with-registry-auth --prune --detach=false --resolve-image=always $${CI_PROJECT_PATH_SLUG:-template-php-project}
 
 .PHONY: up
-up: ./.secrets/mysql_root_password
+up: secrets
 	docker compose -f ./docker-compose.yml -f ./docker-compose-swarm.yml up --build --remove-orphans --always-recreate-deps --force-recreate --pull=always --renew-anon-volumes
 
-.PHONY: down
-down: ./.secrets/mysql_root_password
-	docker compose -f ./docker-compose.yml -f ./docker-compose-swarm.yml down --remove-orphans
+.PHONY: stop
+stop:
+	docker compose -f ./docker-compose.yml -f ./docker-compose-swarm.yml stop
 
 .PHONY: secrets
 secrets: ./.secrets/mysql_root_password
+	@chmod 700 ./.secrets
+	@chmod 444 ./.secrets/mysql_root_password
 
 .PHONY: devcontainer
-devcontainer: ./.secrets/mysql_root_password
+devcontainer: secrets
 	devcontainer up
 	devcontainer exec /bin/bash || true
-	docker compose -f ./docker-compose.yml -f ./docker-compose-devcontainer.yml down --remove-orphans
+	docker ps -q --filter "label=devcontainer.local_folder=$${PWD}" | xargs -r docker stop
 
 # Dependencies
 ./.phpunit.coverage/html:
@@ -165,5 +178,6 @@ devcontainer: ./.secrets/mysql_root_password
 	${MAKE} npm_update
 
 ./.secrets/mysql_root_password:
-	@mkdir -p ./.secrets
-	@umask 077; tmp="$@.tmp"; tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 32 > "$$tmp"; mv "$$tmp" "$@"
+	@install -d -m 700 ./.secrets
+	@openssl rand -hex 16 > "$@"
+	@chmod 444 "$@"

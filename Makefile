@@ -121,6 +121,11 @@ composer_update: ./composer.json
 	composer update --no-plugins --no-scripts --no-autoloader --with-all-dependencies
 	composer dump-autoload --no-plugins --no-scripts --optimize --strict-psr --strict-ambiguous
 
+.PHONY: precreate
+precreate: secrets
+	docker volume create tomaschochola-composer-cache >/dev/null
+	docker volume create tomaschochola-npm-cache >/dev/null
+
 .PHONY: postcreate
 postcreate: install
 
@@ -140,7 +145,7 @@ trivy: secrets
 		xargs -r -n 1 docker run --rm --pull missing \
 			--mount type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock \
 			--mount type=volume,source=trivy-cache,target=/root/.cache \
-			aquasec/trivy:latest image \
+			docker.io/aquasec/trivy:latest image \
 			--exit-code 1 \
 			--severity HIGH,CRITICAL
 
@@ -162,7 +167,7 @@ secrets: ./.secrets/mysql_root_password
 	@chmod 444 ./.secrets/mysql_root_password
 
 .PHONY: devcontainer
-devcontainer: secrets
+devcontainer: precreate
 	devcontainer up
 	devcontainer exec /bin/bash || true
 	docker ps -q --filter "label=devcontainer.local_folder=$${PWD}" | xargs -r docker stop

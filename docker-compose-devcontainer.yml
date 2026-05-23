@@ -1,9 +1,6 @@
 networks:
   devcontainer:
     internal: false
-volumes:
-  composer-cache:
-  npm-cache:
 services:
   devcontainer:
     build:
@@ -28,8 +25,9 @@ services:
       MYSQL_ROOT_PASSWORD: '/run/secrets/mysql_root_password'
       MYSQL_ROOT_USER: 'root'
       MYSQL_UNIT_DATABASE: 'db_unit'
-      NPM_CONFIG_CACHE: '/home/devcontainer/.npm'
       NODE_ENV: 'development'
+      NPM_CONFIG_CACHE: '/home/devcontainer/.npm'
+    init: true
     networks:
       - 'devcontainer'
       - 'mysql'
@@ -58,3 +56,10 @@ services:
       NODE_ENV: 'development'
     volumes:
       - './:/var/www/html'
+volumes:
+  composer-cache:
+    external: true
+    name: 'tomaschochola-composer-cache'
+  npm-cache:
+    external: true
+    name: 'tomaschochola-npm-cache'

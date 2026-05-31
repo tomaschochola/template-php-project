@@ -166,6 +166,10 @@ secrets: ./.secrets/mysql_root_password
 	@chmod 700 ./.secrets
 	@chmod 444 ./.secrets/mysql_root_password
 
+.PHONY: port
+port:
+	@set -o pipefail; project="$$(docker ps --filter 'label=devcontainer.local_folder=$(CURDIR)' --filter 'label=devcontainer.config_file=$(CURDIR)/.devcontainer/devcontainer.json' --format '{{.Label "com.docker.compose.project"}}' | head -n1)"; docker ps -q --filter "label=com.docker.compose.project=$$project" --filter 'label=com.docker.compose.service=nginx' | head -n1 | xargs -r -I{} docker port {} 8080/tcp | awk -F: 'NR==1 { print "http://127.0.0.1:" $$NF; ok=1 } END { exit !ok }'
+
 .PHONY: devcontainer
 devcontainer: precreate
 	devcontainer up

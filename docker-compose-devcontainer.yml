@@ -34,6 +34,15 @@ services:
       - 'nginx'
       - 'php'
       - 'valkey'
+    ports:
+      - host_ip: '127.0.0.1'
+        published: 61501
+        protocol: 'tcp'
+        target: 61501
+      - host_ip: '127.0.0.1'
+        published: 61502
+        protocol: 'tcp'
+        target: 61502
     secrets:
       - 'mysql_root_password'
     user: 'devcontainer:devcontainer'
@@ -44,8 +53,9 @@ services:
   nginx:
     ports:
       - host_ip: '127.0.0.1'
+        published: 61500
         protocol: 'tcp'
-        target: 8080
+        target: 61500
     volumes:
       - './:/var/www/html'
   php:

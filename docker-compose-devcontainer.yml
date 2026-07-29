@@ -1,3 +1,4 @@
+name: 'template-php-project-devcontainer'
 networks:
   devcontainer:
     internal: false

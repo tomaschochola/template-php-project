@@ -12,6 +12,7 @@ ENV APP_ENV=production
 ENV NODE_ENV=production
 RUN <<EOF
   set -euo pipefail
+  export DEBIAN_FRONTEND=noninteractive
   apt-get update -y
   apt-get upgrade -y --no-install-recommends
   apt-get install -y --no-install-recommends libfcgi-bin
@@ -31,6 +32,7 @@ ENV APP_ENV=local
 ENV NODE_ENV=development
 RUN <<EOF
   set -euo pipefail
+  export DEBIAN_FRONTEND=noninteractive
   apt-get update -y
   apt-get upgrade -y --no-install-recommends
   apt-get install -y --no-install-recommends ca-certificates curl wget build-essential git zip unzip
@@ -45,7 +47,7 @@ RUN <<EOF
   groupadd devcontainer
   useradd -s /bin/bash --gid devcontainer -m devcontainer
   install -d -o devcontainer -g devcontainer /home/devcontainer/.composer/cache /home/devcontainer/.npm
-  wget https://nodejs.org/dist/v24.14.0/node-v24.14.0-linux-x64.tar.xz -O node.tar.xz
+  wget https://nodejs.org/dist/v24.18.0/node-v24.18.0-linux-x64.tar.xz -O node.tar.xz
   tar -xf node.tar.xz -C /usr/local --strip-components=1
   rm node.tar.xz
   apt-get autoremove -y
@@ -115,6 +117,7 @@ COPY ./ops/mysql /docker-entrypoint-initdb.d
 FROM versionedvalkey AS valkey
 RUN <<EOF
   set -euo pipefail
+  export DEBIAN_FRONTEND=noninteractive
   apt-get update -y
   apt-get upgrade -y --no-install-recommends
   apt-get autoremove -y

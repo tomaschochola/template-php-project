@@ -4,6 +4,6 @@ includes:
 parameters:
   paths:
     - ./.php-cs-fixer.php
-    - ./index.php
+    - ./public/index.php
     - ./src
     - ./tests

@@ -15,7 +15,7 @@
       "url": "https://github.com/tomaschochola"
     }
   ],
-  "description": "Minimal PHP application template with testing and static analysis.",
+  "description": "Template for PHP 8.5 applications with strict static analysis, testing, and coding standards.",
   "devDependencies": {
     "@tomaschochola/tooling-eslint": "github:tomaschochola/tooling-eslint#2.x",
     "@tomaschochola/tooling-prettier": "github:tomaschochola/tooling-prettier#2.x",
@@ -31,7 +31,10 @@
     "TomasChochola",
     "Tomas Chochola",
     "Tomáš Chochola",
-    "template-php-project"
+    "application",
+    "php",
+    "project",
+    "template"
   ],
   "license": "CC-BY-ND-4.0",
   "name": "@tomaschochola/template-php-project",

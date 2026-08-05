@@ -4,29 +4,39 @@
       "email": "tomaschochola@tomaschochola.cz",
       "homepage": "https://github.com/tomaschochola",
       "name": "Tomáš Chochola",
-      "role": "Author"
+      "role": "Enterprise Architect"
     }
   ],
   "autoload": {
     "psr-4": {
-      "Src\\": "./src"
+      "Src\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Tests\\": "./tests"
+      "Tests\\": "tests/"
     }
   },
   "config": {
     "allow-plugins": false,
-    "audit": {
-      "abandoned": "fail"
-    },
     "platform-check": true,
-    "process-timeout": 0,
+    "policy": {
+      "abandoned": {
+        "audit": "fail",
+        "block": true
+      },
+      "advisories": {
+        "audit": "fail",
+        "block": true
+      },
+      "malware": {
+        "audit": "fail",
+        "block": true
+      }
+    },
     "sort-packages": true
   },
-  "description": "tomaschochola/template-php-project",
+  "description": "Template for PHP 8.5 applications with strict static analysis, testing, and coding standards.",
   "funding": [
     {
       "type": "github",
@@ -36,25 +46,24 @@
   "homepage": "https://github.com/tomaschochola/template-php-project",
   "keywords": [
     "tomaschochola",
-    "TomasChochola",
-    "Tomas Chochola",
-    "Tomáš Chochola",
-    "template-php-project"
+    "application",
+    "php",
+    "project",
+    "template"
   ],
   "license": "CC-BY-ND-4.0",
-  "minimum-stability": "dev",
   "name": "tomaschochola/template-php-project",
   "prefer-stable": true,
   "repositories": [
     {
       "no-api": true,
-      "type": "git",
-      "url": "https://github.com/tomaschochola/tooling-phpstan.git"
+      "type": "vcs",
+      "url": "https://github.com/tomaschochola/tooling-php-cs-fixer.git"
     },
     {
       "no-api": true,
-      "type": "git",
-      "url": "https://github.com/tomaschochola/tooling-php-cs-fixer.git"
+      "type": "vcs",
+      "url": "https://github.com/tomaschochola/tooling-phpstan.git"
     }
   ],
   "require": {
@@ -71,7 +80,6 @@
     "tomaschochola/tooling-phpstan": "^1.0@dev"
   },
   "support": {
-    "docs": "https://github.com/tomaschochola/template-php-project",
     "email": "tomaschochola@tomaschochola.cz",
     "issues": "https://github.com/tomaschochola/template-php-project/issues",
     "source": "https://github.com/tomaschochola/template-php-project.git"

@@ -28,7 +28,11 @@ never:
 
 DEVCONTAINER_COMPOSE := ./.devcontainer/docker-compose.yml
 
-export PHP_CS_FIXER_FUTURE_MODE := 1
+LC_ALL ?= C.UTF-8
+PHP_CS_FIXER_FUTURE_MODE ?= 1
+
+export LC_ALL
+export PHP_CS_FIXER_FUTURE_MODE
 
 # Public goals
 
@@ -39,7 +43,7 @@ fix: eslint_fix php_cs_fixer_fix prettier_fix trimmer_fix
 check: doctor lint analyze coverage audit
 
 .PHONY: doctor
-doctor: git_check npm_config_check npm_doctor composer_diagnose
+doctor: git_check npm_config_check npm_doctor npm_check composer_diagnose
 
 .PHONY: lint
 lint: eslint_check php_cs_fixer_check prettier_check trimmer_check

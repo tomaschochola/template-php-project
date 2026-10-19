@@ -1,5 +1,3 @@
-name: 'template-php-project-devcontainer'
-
 networks:
     devcontainer:
         internal: false
@@ -85,7 +83,7 @@ services:
             start_period: '30s'
             test: ['CMD', 'mysqladmin', 'ping', '--host=127.0.0.1', '--silent']
             timeout: '5s'
-        image: 'docker.io/library/mysql:8.4.11@sha256:3466ba4a4828aa8d46fb7c3bc16b67b781c98413cf4ea0fac6feaa6e881faa26'
+        image: 'docker.io/library/mysql:8.4.11@sha256:24989179f58856db763f418010c1169fecc944e3ec1ea7e921572d83eb070f70'
         logging:
             driver: 'json-file'
             options:
@@ -117,7 +115,7 @@ services:
             start_period: '10s'
             test: ['CMD', 'valkey-cli', 'ping']
             timeout: '5s'
-        image: 'docker.io/valkey/valkey:9.1.2-trixie@sha256:c123e3715db63d06d4ad6964884037aa0d5d4d703939b9929954112889708e1d'
+        image: 'docker.io/valkey/valkey:9.1.2-trixie@sha256:418652cfb58ef879d4978c33553735d7147016032d5aefaa14c828e611eb9dfd'
         logging:
             driver: 'json-file'
             options:

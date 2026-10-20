@@ -83,7 +83,7 @@ services:
             start_period: '30s'
             test: ['CMD', 'mysqladmin', 'ping', '--host=127.0.0.1', '--silent']
             timeout: '5s'
-        image: 'docker.io/library/mysql:8.4.11@sha256:24989179f58856db763f418010c1169fecc944e3ec1ea7e921572d83eb070f70'
+        image: 'docker.io/library/mysql@sha256:24989179f58856db763f418010c1169fecc944e3ec1ea7e921572d83eb070f70'
         logging:
             driver: 'json-file'
             options:
@@ -115,7 +115,7 @@ services:
             start_period: '10s'
             test: ['CMD', 'valkey-cli', 'ping']
             timeout: '5s'
-        image: 'docker.io/valkey/valkey:9.1.2-trixie@sha256:418652cfb58ef879d4978c33553735d7147016032d5aefaa14c828e611eb9dfd'
+        image: 'docker.io/valkey/valkey@sha256:418652cfb58ef879d4978c33553735d7147016032d5aefaa14c828e611eb9dfd'
         logging:
             driver: 'json-file'
             options:
@@ -138,7 +138,7 @@ services:
             start_period: '30s'
             test: ['CMD', 'curl', '--fail', '--silent', '--show-error', 'http://127.0.0.1:8080/__admin/health']
             timeout: '5s'
-        image: 'docker.io/wiremock/wiremock:3.13.2-3@sha256:0d4ecb3e4dc8213fd7a4d37d6a78f6e6b553a6d2e15bd51b0999781282ac61b3'
+        image: 'docker.io/wiremock/wiremock@sha256:0d4ecb3e4dc8213fd7a4d37d6a78f6e6b553a6d2e15bd51b0999781282ac61b3'
         logging:
             driver: 'json-file'
             options:

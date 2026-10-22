@@ -49,10 +49,7 @@
         "TomasChochola",
         "Tomas Chochola",
         "Tomáš Chochola",
-        "application",
-        "php",
-        "project",
-        "template"
+        "template-php-project"
     ],
     "license": "CC-BY-ND-4.0",
     "name": "tomaschochola/template-php-project",

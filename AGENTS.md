@@ -4,10 +4,10 @@
 
 The development environment is configured in `.devcontainer/`. Manage it from the repository root on the host using the Makefile targets or directly through the `devcontainer`, `docker` and `docker compose` CLIs.
 
-- `devcontainer`: `php` 8.5.11.
-- `mysql`: `mysql` 8.4.11.
-- `valkey`: `valkey/valkey` 9.1.2.
-- `wiremock`: `wiremock/wiremock` 3.13.2.
+- `devcontainer`: `php` 8.5.11 — Run development tools and workspace commands.
+- `mysql`: `mysql` 8.4.11 — Provide a database for development and automated tests.
+- `valkey`: `valkey/valkey` 9.1.2 — Provide in-memory storage for development and automated tests.
+- `wiremock`: `wiremock/wiremock` 3.13.2 — Mock HTTP APIs for automated tests.
 
 ```sh
 # start the development environment

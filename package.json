@@ -15,7 +15,7 @@
             "url": "https://github.com/tomaschochola"
         }
     ],
-    "description": "Template for PHP 8.5 applications with strict static analysis, testing, and coding standards.",
+    "description": "github.com/tomaschochola/template-php-project",
     "devDependencies": {
         "@tomaschochola/tooling-eslint": "git+https://github.com/tomaschochola/tooling-eslint.git#main",
         "@tomaschochola/tooling-prettier": "git+https://github.com/tomaschochola/tooling-prettier.git#main",

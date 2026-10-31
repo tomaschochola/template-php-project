@@ -36,7 +36,7 @@
         },
         "sort-packages": true
     },
-    "description": "Template for PHP 8.5 applications with strict static analysis, testing, and coding standards.",
+    "description": "github.com/tomaschochola/template-php-project",
     "funding": [
         {
             "type": "github",

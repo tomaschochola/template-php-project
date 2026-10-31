@@ -84,7 +84,7 @@ services:
             start_period: '30s'
             test: ['CMD', 'mysqladmin', 'ping', '--host=127.0.0.1', '--silent']
             timeout: '5s'
-        image: 'docker.io/library/mysql:9.7.4@sha256:8fb11c38b3551e22d50adbb688f027f8ff4ea2d2445aa277c1cc97b4af85ec54'
+        image: 'docker.io/library/mysql:9.7.4@sha256:86b390ef642f89a0157d6215dee33ddc928b8b0ecab173117f56f6c40cb24eab'
         logging:
             driver: 'json-file'
             options:
